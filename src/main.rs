@@ -1,12 +1,9 @@
-use pest_derive::Parser;
 use pest::Parser;
+use anyhow::anyhow;
+use pest01::*;
 
-#[derive(Parser)]
-#[grammar = "./grammar.pest"]
-pub struct Grammar;
-
-fn main() -> anyhow:: Result <()>{
-   let got = Grammar:: parse(Rule::field, "-6.98,-14\n")?;
-   println!("{:?}", got);
-   Ok(())
+fn main() -> anyhow::Result< () > {
+    let pair = Grammar::parse(Rule::field, "-273.15")?.next().ok_or_else( || anyhow!( "no pair" ) )?;
+    dbg!(pair);
+    Ok(())
 }
